@@ -452,6 +452,63 @@
       </div>
     </div>
 
+    <!-- Phantom Traffic -->
+    <div class="glass bento-card b1 reveal">
+      <div class="glow-dot" style="background:var(--purple); top:-20px; left:-20px;"></div>
+      <span class="proj-badge badge-pu">FEATURED · AI SECURITY</span>
+      <div class="proj-title">🚗💥 Phantom Traffic</div>
+      <div class="proj-desc">
+        Interactive adversarial attack sandbox for autonomous vehicle perception systems. Upload a traffic sign, configure FGSM/PGD attacks, watch classifiers get fooled in real time, and understand why via Grad-CAM heatmaps. Phase 2 deploys attacks in a live traffic simulation.
+      </div>
+      <div class="tech-pills">
+        <span class="pill">PyTorch</span>
+        <span class="pill">FastAPI</span>
+        <span class="pill">Next.js</span>
+        <span class="pill">YOLOv8</span>
+        <span class="pill">Grad-CAM</span>
+        <span class="pill">Celery</span>
+        <span class="pill">Docker</span>
+        <span class="pill">Three.js</span>
+      </div>
+    </div>
+
+    <!-- Phantom Traffic Architecture -->
+    <div class="glass bento-card b2 reveal">
+      <div class="glow-dot" style="background:var(--purple); bottom:-20px; right:-20px;"></div>
+      <span class="proj-badge badge-pu">ARCHITECTURE</span>
+      <div class="proj-title" style="font-size:1rem; margin-bottom:16px;">System Design</div>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <div style="font-family:var(--font-mono);font-size:11px; color:var(--muted);">
+          <span style="color:var(--purple);">▸</span> Browser (Next.js + Three.js)
+        </div>
+        <div style="font-family:var(--font-mono);font-size:11px; color:var(--muted); padding-left:12px;">
+          <span style="color:var(--blue);">↕</span> REST + WebSocket
+        </div>
+        <div style="font-family:var(--font-mono);font-size:11px; color:var(--muted);">
+          <span style="color:var(--purple);">▸</span> FastAPI Backend
+        </div>
+        <div style="font-family:var(--font-mono);font-size:11px; color:var(--muted); padding-left:12px;">
+          <span style="color:var(--emerald);">├</span> YOLOv8 + ResNet-18 (GTSRB)
+        </div>
+        <div style="font-family:var(--font-mono);font-size:11px; color:var(--muted); padding-left:12px;">
+          <span style="color:var(--emerald);">├</span> FGSM / PGD attacks
+        </div>
+        <div style="font-family:var(--font-mono);font-size:11px; color:var(--muted); padding-left:12px;">
+          <span style="color:var(--emerald);">├</span> Grad-CAM explainability
+        </div>
+        <div style="font-family:var(--font-mono);font-size:11px; color:var(--muted); padding-left:12px;">
+          <span style="color:var(--emerald);">└</span> PostgreSQL + Redis
+        </div>
+      </div>
+      <div style="margin-top:20px; display:flex; flex-direction:column; gap:6px;">
+        <div style="font-family:var(--font-mono);font-size:10px; color:var(--muted);">ROADMAP</div>
+        <div style="font-family:var(--font-mono);font-size:11px; color:var(--emerald);">✓ Phase 1 — Adversarial playground</div>
+        <div style="font-family:var(--font-mono);font-size:11px; color:var(--blue);">◎ Phase 2 — Live traffic simulation</div>
+        <div style="font-family:var(--font-mono);font-size:11px; color:var(--muted);">○ Phase 3 — Defense comparison</div>
+        <div style="font-family:var(--font-mono);font-size:11px; color:var(--muted);">○ Phase 4 — Leaderboard &amp; sharing</div>
+      </div>
+    </div>
+
     <!-- Education card -->
     <div class="glass bento-card b4 reveal" style="display:flex; align-items:center; gap:32px; flex-wrap:wrap;">
       <div class="glow-dot" style="background:var(--purple); top:0; right:80px;"></div>
