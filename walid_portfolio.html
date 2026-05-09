@@ -739,57 +739,110 @@
 </div>
 
 <script>
-// ── Knowledge base ──────────────────────────────────────────────────────────
-const KB = [
-  {
-    keys: ['skill','tech','stack','language','know','use','program','tool','framework'],
-    answer: `Walid is pretty versatile — he codes mainly in Python, JavaScript, and Java, but also knows C, C++, SQL, and HTML/CSS. On the AI side he's deep into LLMs, RLHF, and NLP, and uses tools like LangChain and Azure ML regularly. For web work he reaches for React and Tailwind, and he's comfortable with Docker, PyTorch, and FastAPI on the backend.`
-  },
-  {
-    keys: ['experience','work','job','company','employ','outlier','picketa','raw code','intern'],
-    answer: `Right now Walid works remotely as an AI Trainer at Outlier, where he helps make LLMs smarter and safer through RLHF — basically teaching AI models to reason better and stay honest. Before that he did a co-op as a full stack developer at Picketa Systems in Fredericton, and earlier he interned as a software engineer at Raw Code Developers in Kuwait City.`
-  },
-  {
-    keys: ['project','build','built','portfolio','chatbot','inventory','phantom','traffic','latent','navigator','nofrills'],
-    answer: `He's worked on some cool stuff. The <span style="color:var(--blue)">Latent Space Manifold Navigator</span> lets you literally fly through a 3D visualization of how an LLM thinks — built from scratch with React and HTML5 Canvas. <span style="color:var(--blue)">Phantom Traffic</span> is an adversarial AI sandbox where you can fool self-driving car classifiers in real time. He also built a <span style="color:var(--blue)">NoFrills Inventory</span> desktop app in Java and an <span style="color:var(--blue)">AI chatbot</span> (like this one!) that answers questions about his portfolio using GPT-4 and LangChain.`
-  },
-  {
-    keys: ['education','degree','university','unb','school','study','major','minor','math','gpa'],
-    answer: `Walid is finishing up his Computer Science degree at the University of New Brunswick, graduating in 2026. He's focused on AI and Machine Learning, with a minor in Mathematics — so he has both the theory and the practical side covered.`
-  },
-  {
-    keys: ['contact','email','phone','reach','hire','linkedin','available','remote','location','fredericton'],
-    answer: `The best way to reach Walid is by email at <a href="mailto:walidasif239@gmail.com" style="color:var(--blue)">walidasif239@gmail.com</a> or on <a href="https://linkedin.com/in/walid-mohd" target="_blank" style="color:var(--blue)">LinkedIn</a>. You can also call him at 506.442.0280. He's in Fredericton, NB but is totally open to remote work.`
-  },
-  {
-    keys: ['rlhf','llm','reinforcement','human','feedback','ai','machine learning','model','gpt','langchain'],
-    answer: `RLHF is one of Walid's main areas — it stands for Reinforcement Learning from Human Feedback, and it's how you train AI models to be more accurate, safe, and aligned with how humans actually think. He does this day-to-day at Outlier, reviewing model outputs and giving feedback that shapes how the next generation of LLMs behaves.`
-  },
-  {
-    keys: ['who','about','walid','yourself','introduce','background','summary'],
-    answer: `Walid is a full-stack developer and AI engineer who loves building things at the intersection of software and machine learning. He's been working with LLMs and RLHF professionally, building web apps, and shipping AI projects — all while finishing his CS degree at UNB. He's looking for roles in full-stack dev, ML engineering, or AI research.`
-  },
-  {
-    keys: ['github','repo','code','source','open source'],
-    answer: `You can check out his code on GitHub at <a href="https://github.com/wamo112" target="_blank" style="color:var(--blue)">github.com/wamo112</a> — he has the Latent Space Navigator, NoFrills Inventory, and more up there.`
-  },
-];
-
+// ── Chatbot brain ────────────────────────────────────────────────────────────
 function getReply(input) {
   const q = input.toLowerCase().trim();
-  if (/^(hi|hello|hey|sup|yo|howdy|hiya|good morning|good afternoon|good evening|what's up|whats up)[\s!?]*$/.test(q)) {
-    return `Hey! 👋 I'm Walid's assistant. I can tell you about his skills, projects, work experience, education, or how to get in touch — what would you like to know?`;
+
+  // ── Greetings ──
+  if (/\b(hi|hello|hey|sup|yo|howdy|hiya|good (morning|afternoon|evening)|what'?s up)\b/.test(q)) {
+    return `Hey! 👋 I'm Walid's assistant. Ask me anything — his skills, projects, work history, education, or just say what's on your mind.`;
   }
-  if (/^(thanks|thank you|thx|ty|cheers|awesome|great|cool|nice)[\s!?]*$/.test(q)) {
-    return `No problem! Feel free to ask anything else about Walid. 😊`;
+
+  // ── Farewells ──
+  if (/\b(bye|goodbye|see (you|ya)|cya|later|take care)\b/.test(q)) {
+    return `Take care! Come back anytime if you want to know more about Walid. 👋`;
   }
-  if (/^(bye|goodbye|see you|cya|later)[\s!?]*$/.test(q)) {
-    return `Take care! Don't hesitate to come back if you have more questions about Walid. 👋`;
+
+  // ── Thanks ──
+  if (/^(thanks|thank you|thx|ty|cheers|awesome|great|cool|nice)[!.?]*$/.test(q)) {
+    return `Happy to help! Anything else you'd like to know about Walid?`;
   }
-  for (const entry of KB) {
-    if (entry.keys.some(k => q.includes(k))) return entry.answer;
+
+  // ── Basic general questions ──
+  const mathMatch = q.match(/what(?:'s| is) (\d+)\s*([+\-*x×\/÷])\s*(\d+)/);
+  if (mathMatch) {
+    const a = parseFloat(mathMatch[1]), op = mathMatch[2], b = parseFloat(mathMatch[3]);
+    const result = op === '+' ? a+b : op === '-' ? a-b : /[x×*]/.test(op) ? a*b : a/b;
+    return `That's ${result}. Anyway, feel free to ask me about Walid too! 😄`;
   }
-  return `Hmm, I'm not sure about that one. I can answer questions about Walid's <span style="color:var(--blue)">skills</span>, <span style="color:var(--blue)">experience</span>, <span style="color:var(--blue)">projects</span>, <span style="color:var(--blue)">education</span>, or <span style="color:var(--blue)">contact info</span> — just ask!`;
+  if (/what (day|time|date) is it|what'?s the (time|date|day)/.test(q)) {
+    return `I don't have a live clock, but I can tell you Walid is currently based in Fredericton, NB (Atlantic Time). Anything about him I can help with?`;
+  }
+  if (/what is (your name|you called)|who are you|are you (a bot|an ai|human)/.test(q)) {
+    return `I'm an AI assistant built into Walid's portfolio — here to answer questions about him. I'm not a general-purpose AI, but I can handle the basics! What would you like to know about Walid?`;
+  }
+  if (/how are you|how'?s it going|you good/.test(q)) {
+    return `Doing great, thanks for asking! 😄 Ready to tell you all about Walid — what are you curious about?`;
+  }
+  if (/what can you (do|help|tell)|what do you know/.test(q)) {
+    return `I know everything about Walid — his skills, work experience at Outlier and Picketa, his projects like Phantom Traffic, his CS degree at UNB, and how to contact him. Just ask!`;
+  }
+
+  // ── About Walid / intro ──
+  if (/\b(who is walid|about walid|tell me about (him|yourself|walid)|introduce|background|summary|overview)\b/.test(q)) {
+    return `Walid Mohammed is a full-stack developer and AI engineer finishing his CS degree at UNB (graduating 2026). He works as an AI Trainer at Outlier doing RLHF on LLMs, has shipped full-stack apps at Picketa Systems, and builds AI projects like Phantom Traffic. He's looking for roles in full-stack dev, ML engineering, or AI research — based in Fredericton but open to remote.`;
+  }
+
+  // ── Skills / tech stack ──
+  if (/\b(skill|tech|stack|language|know|use|program|tool|framework|what can he|what does he know|good at|proficient|expertise)\b/.test(q)) {
+    return `Walid's core languages are Python, JavaScript, and Java, plus C/C++, SQL, and HTML/CSS. On the AI side he works with LLMs, RLHF, NLP, PyTorch, LangChain, and Azure ML. For web he uses React and Tailwind, and on the backend FastAPI and Docker. He's equally comfortable building AI pipelines and shipping production web apps.`;
+  }
+
+  // ── Experience / jobs ──
+  if (/\b(experience|work|job|career|employ|company|outlier|picketa|raw code|intern|co-op|position|role|where has he worked)\b/.test(q)) {
+    if (/outlier/.test(q)) {
+      return `At Outlier (Jan 2025–present), Walid works remotely as an AI Trainer — optimizing LLMs through RLHF, evaluating model outputs for accuracy and safety, and providing feedback that directly shapes how next-gen models behave.`;
+    }
+    if (/picketa/.test(q)) {
+      return `At Picketa Systems (Jan–Apr 2023), Walid was a Full Stack Developer — he built and maintained their web app front-end and back-end, squashed bugs, and shipped new features.`;
+    }
+    if (/raw code|kuwait/.test(q)) {
+      return `At Raw Code Developers in Kuwait City (Jan–Aug 2021), Walid interned as a Software Engineer — building responsive web apps, engineering features from design to production, and optimizing performance.`;
+    }
+    return `Walid has three main roles on his resume: <br>• <strong>AI Trainer @ Outlier</strong> (Jan 2025–present) — RLHF on LLMs, remote<br>• <strong>Full Stack Developer @ Picketa Systems</strong> (Jan–Apr 2023) — Fredericton, NB<br>• <strong>Software Engineer Intern @ Raw Code Developers</strong> (Jan–Aug 2021) — Kuwait City<br><br>Want details on any of them?`;
+  }
+
+  // ── Projects ──
+  if (/\b(project|build|built|made|created|phantom|traffic|inventory|chatbot|portfolio assistant|what has he built|show me)\b/.test(q)) {
+    if (/phantom|traffic|adversarial|autonomous|yolo|attack/.test(q)) {
+      return `<strong>Phantom Traffic</strong> is Walid's adversarial AI sandbox — you upload a traffic sign, configure FGSM or PGD attacks, and watch self-driving car classifiers get fooled in real time. It uses PyTorch, YOLOv8, FastAPI, Grad-CAM for explainability, and Three.js for a live traffic simulation in Phase 2. Pretty wild project.`;
+    }
+    if (/inventory|java|swing|grocery/.test(q)) {
+      return `The <strong>Inventory Management System</strong> is a full-stack Java desktop app Walid built for a grocery chain — Swing GUI, MySQL backend via JDBC, full CRUD with data validation and error handling.`;
+    }
+    if (/chatbot|portfolio assistant|gpt|langchain/.test(q)) {
+      return `The <strong>AI Portfolio Assistant</strong> (this chatbot!) is one of Walid's projects — an LLM-powered assistant integrated into his portfolio using GPT-4, LangChain, and a custom knowledge base with advanced prompt engineering for accurate, human-aligned answers.`;
+    }
+    return `Walid's main projects:<br>• <strong>Phantom Traffic</strong> — adversarial attack sandbox for autonomous vehicle AI (PyTorch, YOLOv8, FastAPI, Three.js)<br>• <strong>AI Portfolio Assistant</strong> — this chatbot, built with GPT-4 + LangChain<br>• <strong>Inventory Management System</strong> — full-stack Java desktop app with MySQL<br><br>Ask about any one of them for more detail!`;
+  }
+
+  // ── Education ──
+  if (/\b(education|degree|university|unb|school|study|major|minor|math|graduate|graduation|gpa|course|class)\b/.test(q)) {
+    return `Walid is finishing a BSc in Computer Science at the University of New Brunswick, graduating in 2026. He's specializing in AI & Machine Learning with a minor in Mathematics — coursework includes deep reinforcement learning, data science, and NLP. So he's got both the theoretical foundations and the hands-on project experience.`;
+  }
+
+  // ── Contact / hiring ──
+  if (/\b(contact|email|phone|reach|hire|hiring|linkedin|available|remote|location|fredericton|get in touch|work with|recruit)\b/.test(q)) {
+    return `You can reach Walid at <a href="mailto:walidasif239@gmail.com" style="color:var(--blue)">walidasif239@gmail.com</a>, on <a href="https://linkedin.com/in/walid-mohd" target="_blank" style="color:var(--blue)">LinkedIn</a>, or by phone at 506.442.0280. He's based in Fredericton, NB and is open to remote roles in full-stack dev, ML engineering, or AI research.`;
+  }
+
+  // ── RLHF / AI / LLM deep-dive ──
+  if (/\b(rlhf|reinforcement learning from human feedback|llm|large language model|gpt|alignment|fine.?tun|langchain|nlp|neural|pytorch|azure ml)\b/.test(q)) {
+    return `RLHF (Reinforcement Learning from Human Feedback) is Walid's specialty — it's the technique used to align LLMs with human values and improve their reasoning. He applies it daily at Outlier, evaluating model outputs and providing structured feedback that feeds back into training. He also works with LangChain, PyTorch, Azure ML, and NLP tooling across his projects.`;
+  }
+
+  // ── GitHub ──
+  if (/\b(github|repo|repository|source code|open source|code online)\b/.test(q)) {
+    return `Walid's GitHub is <a href="https://github.com/wamo112" target="_blank" style="color:var(--blue)">github.com/wamo112</a> — you'll find Phantom Traffic, the Inventory app, and more there.`;
+  }
+
+  // ── Availability / open to work ──
+  if (/\b(open to work|looking for|job search|available|seeking|opportunity|opportunities|internship|full.?time|part.?time)\b/.test(q)) {
+    return `Yes! Walid is actively looking for roles in full-stack development, ML engineering, or AI research. He's based in Fredericton, NB but fully open to remote. Best to reach him at <a href="mailto:walidasif239@gmail.com" style="color:var(--blue)">walidasif239@gmail.com</a> or <a href="https://linkedin.com/in/walid-mohd" target="_blank" style="color:var(--blue)">LinkedIn</a>.`;
+  }
+
+  // ── Fallback ──
+  return `I'm not sure I caught that — I'm best at answering questions about Walid's <span style="color:var(--blue)">skills</span>, <span style="color:var(--blue)">experience</span>, <span style="color:var(--blue)">projects</span>, <span style="color:var(--blue)">education</span>, or <span style="color:var(--blue)">contact info</span>. What would you like to know?`;
 }
 
 // ── UI logic ────────────────────────────────────────────────────────────────
