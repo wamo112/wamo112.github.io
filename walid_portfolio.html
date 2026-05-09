@@ -776,11 +776,20 @@ const KB = [
 ];
 
 function getReply(input) {
-  const q = input.toLowerCase();
+  const q = input.toLowerCase().trim();
+  if (/^(hi|hello|hey|sup|yo|howdy|hiya|good morning|good afternoon|good evening|what's up|whats up)[\s!?]*$/.test(q)) {
+    return `Hey! 👋 I'm Walid's assistant. I can tell you about his skills, projects, work experience, education, or how to get in touch — what would you like to know?`;
+  }
+  if (/^(thanks|thank you|thx|ty|cheers|awesome|great|cool|nice)[\s!?]*$/.test(q)) {
+    return `No problem! Feel free to ask anything else about Walid. 😊`;
+  }
+  if (/^(bye|goodbye|see you|cya|later)[\s!?]*$/.test(q)) {
+    return `Take care! Don't hesitate to come back if you have more questions about Walid. 👋`;
+  }
   for (const entry of KB) {
     if (entry.keys.some(k => q.includes(k))) return entry.answer;
   }
-  return `I'm not sure about that specifically. Try asking about Walid's <span style="color:var(--blue)">skills</span>, <span style="color:var(--blue)">experience</span>, <span style="color:var(--blue)">projects</span>, or <span style="color:var(--blue)">contact info</span>.`;
+  return `Hmm, I'm not sure about that one. I can answer questions about Walid's <span style="color:var(--blue)">skills</span>, <span style="color:var(--blue)">experience</span>, <span style="color:var(--blue)">projects</span>, <span style="color:var(--blue)">education</span>, or <span style="color:var(--blue)">contact info</span> — just ask!`;
 }
 
 // ── UI logic ────────────────────────────────────────────────────────────────
